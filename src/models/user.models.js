@@ -2,10 +2,10 @@ import mongoose, { Schema } from "mongoose";
 
 const userSchema = new Schema(
   {
-    username:{
-      type:String,
-      required:[true,"Username is required"],
-      unique:[true,"Username should be unique"]
+    username: {
+      type: String,
+      unique: true,
+      sparse: true, // Allow nulls to be unique
     },
     fullName: {
       type: String,
@@ -14,17 +14,26 @@ const userSchema = new Schema(
     email: {
       type: String,
       unique: true,
+      required: true,
     },
     phoneNumber: {
       type: String,
-      required:true,
-      unique:true
+      unique: true,
+      sparse: true,
     },
     password: {
       type: String,
-      required:[true,"Enter a password"]
     },
-   
+    provider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
+    },
+    picture: String,
+    role: {
+      type: String,
+      default: "user",
+    },
   },
   { timestamps: true }
 );
