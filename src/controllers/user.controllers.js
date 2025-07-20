@@ -162,6 +162,12 @@ const googleSignupLogin = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
+    if (!validator.isEmail(email)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Enter a valid email" });
+    }
+
     let existedUser = await User.findOne({ email });
 
     if (existedUser && existedUser.provider === "local") {
